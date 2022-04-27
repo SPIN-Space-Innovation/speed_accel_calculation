@@ -37,7 +37,7 @@ int main(){
                yi[DIM] = (val2/100);
                if (DIM>5 && height_max < yi[DIM]){
                    height_max = yi[DIM];
-               }
+                   }
                DIM = DIM + 1;
             }
             if(height_max - yi[DIM-1] > 1){
@@ -69,49 +69,54 @@ int main(){
             h[e] = yi[u] + (yi[u+1] - yi[u-1])*(xi[u] - xi[u-1])/(xi[u+1] - xi[u-1]);
             e = e+1;
             }
-        }  
+        }
     }
     DIM = e - 1;
     cout<<"DIM = "<<DIM<<"\n";
     
     
-    long double A[n][n];
+    //long double A[n][n];
     long double coef[n];
-    long double B[n];
+    //long double B[n];
     long double h2[DIM];
     long double velocity[DIM];
     long double acceleration[DIM];
     
-    int i = 0;
-    
-    while (i < DIM){
-        if(i%n == n - 1)
-        {
-            B[i%n] = h[i];
-            for (int j = 0; j < n; j++)
-            {
-                A[i%n][j] = pow(t[i],j);
-            };
-            gauss_(A,B,coef);
-            
-            for (int m = 0; m < n; m++)
-            {
-                h2[i - n+1 + m] = height_(t[i-n+1+m],coef);
-                velocity[i - n+1 + m] = velocity_(t[i-n+1+m],coef);
-                acceleration[i - n+1 + m] = acceleration_(t[i-n+1+m],coef);
+//    int i = 0;
+//
+//    while (i < DIM){
+//        if(i%n == n - 1)
+//        {
+//            B[i%n] = h[i];
+//            for (int j = 0; j < n; j++)
+//            {
+//                A[i%n][j] = pow(t[i],j);
+//            };
+//            gauss_(A,B,coef);
+//
+//            for (int m = 0; m < n; m++)
+//            {
+//                h2[i - n+1 + m] = height_(t[i-n+1+m],coef);
+//                velocity[i - n+1 + m] = velocity_(t[i-n+1+m],coef);
+//                acceleration[i - n+1 + m] = acceleration_(t[i-n+1+m],coef);
+//
+//                cout<<"t"<<i-n+1+m<<" = "<<t[i-n+1+m]<<"   h"<<i-n+1+m<<" = "<<h[i-n+1+m]<<"   h"<<i-n+1+m<<" = "<<h2[i-n+1+m]<<"   u"<<i-n+1+m<<" = "<<velocity[i-n+1+m]<<"   a"<<i-n+1+m<<" = "<<acceleration[i-n+1+m]<<"\n";
+//            }
+//
+//        }else
+//        {
+//             B[i%n] = h[i];
+//             for (int j = 0; j < n; j++)
+//             {
+//                 A[i%n][j] = pow(t[i],j);
+//             }
+//        }
+//        i = i + 1;
+//    }
 
-                cout<<"t"<<i-n+1+m<<" = "<<t[i-n+1+m]<<"   h"<<i-n+1+m<<" = "<<h[i-n+1+m]<<"   h"<<i-n+1+m<<" = "<<h2[i-n+1+m]<<"   u"<<i-n+1+m<<" = "<<velocity[i-n+1+m]<<"   a"<<i-n+1+m<<" = "<<acceleration[i-n+1+m]<<"\n";
-            }
-            
-        }else
-        {
-             B[i%n] = h[i];
-             for (int j = 0; j < n; j++)
-             {
-                 A[i%n][j] = pow(t[i],j);
-             }
-        }
-        i = i + 1;
+least_square_pol(t,h,h2,velocity,acceleration);
+    for (int i = 0; i < DIM; ++i) {
+        cout<<"t"<<i<<" = "<<t[i]<<"   h"<<i<<" = "<<h[i]<<"   h"<<i<<" = "<<h2[i]<<"   u"<<i<<" = "<<velocity[i]<<"   a"<<i<<" = "<<acceleration[i]<<"\n";
     }
     return 0;
 }
